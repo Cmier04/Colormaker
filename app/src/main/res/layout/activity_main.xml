@@ -8,31 +8,37 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/zero"
+        android:textSize="96sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.339" />
+        app:layout_constraintVertical_bias="0.147" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch1"
-        android:layout_width="92dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="340dp"
-        android:text="Red"
+    <Button
+        android:id="@+id/DecreaseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="128dp"
+        android:text="@string/decrease_text"
+        app:layout_constraintEnd_toStartOf="@+id/IncreaseButton"
+        app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="98dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="348dp"
-        android:layout_marginEnd="80dp"
+    <Button
+        android:id="@+id/IncreaseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="28dp"
+        android:text="@string/increase_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
