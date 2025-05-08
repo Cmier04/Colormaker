@@ -6,8 +6,31 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d7dbdd"
+    android:background="#fff0db"
     tools:context=".MainActivity">
+
+    <View
+        android:id="@+id/Title"
+        android:layout_height="match_parent"
+        android:layout_width="70dp"
+        app:layout_constraintEnd_toStartOf="@id/colorView"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#a04000"/>
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@id/colorView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/nc_no_nl_no_nr_n_nm_na_nk_ne_nr"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="#FFF"
+        android:padding="16dp"
+        android:textSize="23sp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <View
         android:id="@+id/colorView"
@@ -15,7 +38,7 @@
         android:layout_height="match_parent"
         android:background="#000000"
         tools:layout_editor_absoluteX="10dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/Title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="16dp"/>
@@ -23,27 +46,21 @@
     <!-- Red controls -->
     <Switch
         android:id="@+id/Redswitch"
-        android:layout_width="120dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:text="@string/red"
-        android:scaleX="1.25"
-        android:scaleY="1.25"
         tools:ignore="UseSwitchCompatOrMaterialXml"
         tools:layout_editor_absoluteX="498dp"
         app:layout_constraintStart_toEndOf="@id/colorView"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="50dp"
-        android:textSize="25sp"
         android:switchMinWidth="50dp"
-        android:textColor="#FF0000"
-        android:textStyle="bold"
         android:trackTint="#FF0000"/>
 
     <SeekBar
         android:id="@+id/RedseekBar"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="40dp"
         android:max="100"
         tools:layout_editor_absoluteX="556dp"
@@ -72,28 +89,22 @@
     <!-- Green controls -->
     <Switch
         android:id="@+id/Greenswitch"
-        android:layout_width="120dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        android:text="@string/green"
-        android:scaleX="1.25"
-        android:scaleY="1.25"
         tools:ignore="UseSwitchCompatOrMaterialXml"
         tools:layout_editor_absoluteX="429dp"
         tools:layout_editor_absoluteY="204dp"
         app:layout_constraintStart_toEndOf="@id/colorView"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintTop_toBottomOf="@id/Redswitch"
         android:layout_marginTop="50dp"
-        android:textSize="25sp"
         android:switchMinWidth="40dp"
-        android:textStyle="bold"
-        android:textColor="#00AA00"
         android:trackTint="#00AA00" />
 
     <SeekBar
         android:id="@+id/GreenseekBar"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="48dp"
         android:max="100"
         tools:layout_editor_absoluteY="40dp"
@@ -122,33 +133,25 @@
 
     <Switch
         android:id="@+id/Blueswitch"
-        android:layout_width="120dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:scaleY="1.25"
-        android:scaleX="1.25"
         android:minHeight="48dp"
-        android:text="@string/blue"
         tools:ignore="UseSwitchCompatOrMaterialXml"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="586dp"
         app:layout_constraintTop_toBottomOf="@id/Greenswitch"
         app:layout_constraintStart_toEndOf="@id/colorView"
         android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/resetButton"
-        android:layout_marginStart="40dp"
-        android:textColor="#0000FF"
-        android:textSize="25sp"
-        android:textStyle="bold"
+        android:layout_marginStart="16dp"
         android:trackTint="#0000FF"
         android:layout_marginBottom="40dp"/>
 
     <SeekBar
         android:id="@+id/BlueseekBar"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="48dp"
         android:max="100"
         tools:layout_editor_absoluteY="613dp"
-        app:layout_constraintBottom_toTopOf="@+id/resetButton"
         app:layout_constraintStart_toEndOf="@id/Blueswitch"
         app:layout_constraintTop_toBottomOf="@id/GreenseekBar"
         android:layout_marginTop="55dp"
@@ -162,6 +165,7 @@
         android:layout_height="48dp"
         android:autofillHints=""
         android:hint="@string/_0_0"
+        android:textAlignment="center"
         android:inputType="numberDecimal"
         android:maxLength="4"
         tools:layout_editor_absoluteX="16dp"
@@ -169,7 +173,6 @@
         app:layout_constraintTop_toBottomOf="@id/greenText"
         app:layout_constraintStart_toEndOf="@id/BlueseekBar"
         android:layout_marginTop="55dp"
-        app:layout_constraintBottom_toTopOf="@+id/resetButton"
         android:textColor="#FFFF"
         android:background="#0000FF"
         android:layout_marginBottom="40dp"/>
@@ -177,7 +180,7 @@
     <Button
         android:id="@+id/resetButton"
         android:layout_width="200dp"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:text="@string/Reset"
         android:backgroundTint="#a04000"
         tools:layout_editor_absoluteX="16dp"
@@ -185,6 +188,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/colorView"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

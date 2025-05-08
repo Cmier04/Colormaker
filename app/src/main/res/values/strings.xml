@@ -8,4 +8,6 @@
     <string name="green">Green</string>
     <string name="blue">Blue</string>
     <string name="Reset">Reset</string>
+    <string name="nc_no_nl_no_nr_n_nm_na_nk_ne_nr">\nC\nO\nL\nO\nR\n \nM\nA\nK\nE\nR</string>
+    <string name="color_maker">COLOR MAKER</string>
 </resources>

@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Toast
+import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,7 +55,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
+/*
+        val titleText = findViewById<TextView>(R.id.titleText)
+        val originalText = "COLOR MAKER"
+        val verticalText = originalText.toCharArray().joinToString("\n")
+        titleText.text = verticalText
+*/
         //assign each variable to their id; altered to save line space and condense amount of variables
         colorView = findViewById(R.id.colorView)
         red = ColorController(
