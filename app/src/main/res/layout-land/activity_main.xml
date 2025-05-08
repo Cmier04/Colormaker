@@ -6,105 +6,185 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#d7dbdd"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <View
+        android:id="@+id/colorView"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        tools:layout_editor_absoluteX="86dp"
-        tools:layout_editor_absoluteY="-71dp">
+        android:background="#000000"
+        tools:layout_editor_absoluteX="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"/>
 
-        <View
-            android:id="@+id/colorView"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:background="#000000" />
+    <!-- Red controls -->
+    <Switch
+        android:id="@+id/Redswitch"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="@string/red"
+        android:scaleX="1.25"
+        android:scaleY="1.25"
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        tools:layout_editor_absoluteX="498dp"
+        app:layout_constraintStart_toEndOf="@id/colorView"
+        android:layout_marginStart="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp"
+        android:textSize="25sp"
+        android:switchMinWidth="50dp"
+        android:textColor="#FF0000"
+        android:textStyle="bold"
+        android:trackTint="#FF0000"/>
 
-        <!-- Red -->
+    <SeekBar
+        android:id="@+id/RedseekBar"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:max="100"
+        tools:layout_editor_absoluteX="556dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="55dp"
+        app:layout_constraintStart_toEndOf="@id/Redswitch"
+        android:progressBackgroundTint="#FF0000"
+        android:thumbTint="#FF0000"/>
 
-        <Switch
-            android:id="@+id/Redswitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:text="@string/red"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    <EditText
+        android:id="@+id/redText"
+        android:layout_width="70dp"
+        android:layout_height="48dp"
+        android:autofillHints=""
+        android:hint="@string/_0_0"
+        android:inputType="numberDecimal"
+        android:maxLength="4"
+        tools:layout_editor_absoluteX="744dp"
+        app:layout_constraintStart_toEndOf="@id/RedseekBar"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="55dp"
+        android:textAlignment="center"
+        android:background="#FF0000"
+        android:textColor="#FFFF" />
 
-        <SeekBar
-            android:id="@+id/RedseekBar"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:max="100" />
+    <!-- Green controls -->
+    <Switch
+        android:id="@+id/Greenswitch"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="@string/green"
+        android:scaleX="1.25"
+        android:scaleY="1.25"
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        tools:layout_editor_absoluteX="429dp"
+        tools:layout_editor_absoluteY="204dp"
+        app:layout_constraintStart_toEndOf="@id/colorView"
+        android:layout_marginStart="40dp"
+        app:layout_constraintTop_toBottomOf="@id/Redswitch"
+        android:layout_marginTop="50dp"
+        android:textSize="25sp"
+        android:switchMinWidth="40dp"
+        android:textStyle="bold"
+        android:textColor="#00AA00"
+        android:trackTint="#00AA00" />
 
-        <EditText
-            android:id="@+id/redText"
-            android:layout_width="100dp"
-            android:layout_height="48dp"
-            android:autofillHints=""
-            android:inputType="numberDecimal"
-            android:maxLength="4"
-            android:hint="@string/_0_0" />
+    <SeekBar
+        android:id="@+id/GreenseekBar"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:max="100"
+        tools:layout_editor_absoluteY="40dp"
+        app:layout_constraintTop_toBottomOf="@id/RedseekBar"
+        android:layout_marginTop="55dp"
+        app:layout_constraintStart_toEndOf="@id/Greenswitch"
+        android:progressBackgroundTint="#00AA00"
+        android:thumbTint="#00AA00"/>
 
-        <!-- Green -->
+    <EditText
+        android:id="@+id/greenText"
+        android:layout_width="70dp"
+        android:layout_height="48dp"
+        android:autofillHints=""
+        android:hint="@string/_0_0"
+        android:inputType="numberDecimal"
+        android:maxLength="4"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="538dp"
+        app:layout_constraintStart_toEndOf="@id/GreenseekBar"
+        app:layout_constraintTop_toBottomOf="@id/redText"
+        android:layout_marginTop="55dp"
+        android:textAlignment="center"
+        android:background="#00AA00"
+        android:textColor="#FFFF"/>
 
-        <Switch
-            android:id="@+id/Greenswitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:text="@string/green"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
+    <Switch
+        android:id="@+id/Blueswitch"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:scaleY="1.25"
+        android:scaleX="1.25"
+        android:minHeight="48dp"
+        android:text="@string/blue"
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="586dp"
+        app:layout_constraintTop_toBottomOf="@id/Greenswitch"
+        app:layout_constraintStart_toEndOf="@id/colorView"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/resetButton"
+        android:layout_marginStart="40dp"
+        android:textColor="#0000FF"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:trackTint="#0000FF"
+        android:layout_marginBottom="40dp"/>
 
-        <SeekBar
-            android:id="@+id/GreenseekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="100" />
+    <SeekBar
+        android:id="@+id/BlueseekBar"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:max="100"
+        tools:layout_editor_absoluteY="613dp"
+        app:layout_constraintBottom_toTopOf="@+id/resetButton"
+        app:layout_constraintStart_toEndOf="@id/Blueswitch"
+        app:layout_constraintTop_toBottomOf="@id/GreenseekBar"
+        android:layout_marginTop="55dp"
+        android:progressBackgroundTint="#0000FF"
+        android:thumbTint="#0000FF"
+        android:layout_marginBottom="40dp"/>
 
-        <EditText
-            android:id="@+id/greenText"
-            android:layout_width="100dp"
-            android:layout_height="48dp"
-            android:autofillHints=""
-            android:inputType="numberDecimal"
-            android:maxLength="4"
-            android:hint="@string/_0_0"/>
+    <EditText
+        android:id="@+id/blueText"
+        android:layout_width="70dp"
+        android:layout_height="48dp"
+        android:autofillHints=""
+        android:hint="@string/_0_0"
+        android:inputType="numberDecimal"
+        android:maxLength="4"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="613dp"
+        app:layout_constraintTop_toBottomOf="@id/greenText"
+        app:layout_constraintStart_toEndOf="@id/BlueseekBar"
+        android:layout_marginTop="55dp"
+        app:layout_constraintBottom_toTopOf="@+id/resetButton"
+        android:textColor="#FFFF"
+        android:background="#0000FF"
+        android:layout_marginBottom="40dp"/>
 
-        <!-- Blue -->
-
-        <Switch
-            android:id="@+id/Blueswitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:text="@string/blue"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-        <SeekBar
-            android:id="@+id/BlueseekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="100" />
-
-        <EditText
-            android:id="@+id/blueText"
-            android:layout_width="100dp"
-            android:layout_height="48dp"
-            android:autofillHints=""
-            android:hint="@string/_0_0"
-            android:inputType="numberDecimal"
-            android:maxLength="4" />
-
-        <!-- Reset Button added later -->
-
-        <Button
-            android:id="@+id/resetButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Reset" />
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:text="@string/Reset"
+        android:backgroundTint="#a04000"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="661dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/colorView"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
