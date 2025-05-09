@@ -9,6 +9,8 @@
     android:background="#fff0db"
     tools:context=".MainActivity">
 
+    <!-- Change the guidelines in order to move everything down, make guidelines for color view and title (though can omit that one) -->
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/redGuideLine"
         android:layout_width="wrap_content"
@@ -21,7 +23,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65"/>
+        app:layout_constraintGuide_percent="0.59"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/blueGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.69"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/startLine"
@@ -38,11 +47,11 @@
         app:layout_constraintGuide_percent="0.95"/>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/topLine"
+        android:id="@+id/bottomLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.095"/>
+        app:layout_constraintGuide_percent="0.95" />
 
     <View
         android:layout_width="match_parent"
@@ -120,13 +129,13 @@
 
     <Switch
         android:id="@+id/Greenswitch"
-        android:layout_width="50dp"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="16dp"
         android:minHeight="48dp"
         android:trackTint="#00AA00"
         app:layout_constraintTop_toTopOf="@id/greenGuideLine"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/startLine"
         tools:ignore="UseSwitchCompatOrMaterialXml"
         tools:layout_editor_absoluteX="38dp" />
 
@@ -168,7 +177,7 @@
         android:minHeight="48dp"
         tools:ignore="UseSwitchCompatOrMaterialXml"
         android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/Greenswitch"
+        app:layout_constraintTop_toBottomOf="@id/blueGuideLine"
         app:layout_constraintStart_toStartOf="@id/startLine" />
 
     <SeekBar
@@ -192,14 +201,12 @@
         android:hint="@string/_0_0"
         android:inputType="numberDecimal"
         android:maxLength="4"
-        android:layout_marginTop="45dp"
         android:textAlignment="center"
         android:textColor="#FFF"
         android:background="#0000FF"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintStart_toEndOf="@id/BlueseekBar"
-        app:layout_constraintTop_toBottomOf="@id/greenText"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/blueGuideLine"
+        app:layout_constraintEnd_toEndOf="@id/EndLine"/>
 
     <!-- Reset Button added later -->
 
@@ -211,10 +218,8 @@
         android:backgroundTint="#a04000"
         android:text="@string/Reset"
         app:layout_constraintBottom_toBottomOf="@+id/bottomLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/BlueseekBar"
-        app:layout_constraintVertical_bias="0.495" />
+        app:layout_constraintEnd_toEndOf="@id/EndLine"
+        app:layout_constraintStart_toStartOf="@id/startLine" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

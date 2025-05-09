@@ -9,6 +9,8 @@
     android:background="#fff0db"
     tools:context=".MainActivity">
 
+    <!-- add guidelines: colorView, top, bottom, start, end -->
+
     <View
         android:id="@+id/Title"
         android:layout_height="match_parent"

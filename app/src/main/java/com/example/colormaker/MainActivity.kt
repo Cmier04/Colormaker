@@ -15,7 +15,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Toast
-import android.widget.TextView
+
+/*---------------------N O T E S------------------------
+     - add persistance = when app closes out, should save data,
+     - make sure it can also save data when switch is turned off
+ */
 
 class MainActivity : AppCompatActivity() {
 
