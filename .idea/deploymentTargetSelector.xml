@@ -7,10 +7,10 @@
       </SelectionState>
       <SelectionState runConfigName="MainActivity">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-05-08T22:52:24.947730Z">
+        <DropdownSelection timestamp="2025-05-10T00:43:00.633769600Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\kitte\.android\avd\Pixel_API_35.avd" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\kitte\.android\avd\Pixel_Tablet_API_35.avd" />
             </handle>
           </Target>
         </DropdownSelection>

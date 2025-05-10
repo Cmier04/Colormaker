@@ -16,21 +16,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.60" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/greenGuideLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.59"/>
+        app:layout_constraintGuide_percent="0.69"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/blueGuideLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.69"/>
+        app:layout_constraintGuide_percent="0.78"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/startLine"
@@ -77,12 +77,13 @@
     <View
         android:id="@+id/colorView"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="24dp"
         android:background="#000000"
-        app:layout_constraintTop_toBottomOf="@id/colorTop"
         android:layout_margin="16dp"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/colorTop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/redGuideLine"/>
 
         <!-- Red -->
 

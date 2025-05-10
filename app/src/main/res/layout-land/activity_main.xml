@@ -11,39 +11,68 @@
 
     <!-- add guidelines: colorView, top, bottom, start, end -->
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/topLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottomLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4333"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.965"/>
+
     <View
         android:id="@+id/Title"
         android:layout_height="match_parent"
-        android:layout_width="70dp"
+        android:layout_width="45dp"
         app:layout_constraintEnd_toStartOf="@id/colorView"
         app:layout_constraintStart_toStartOf="parent"
         android:background="#a04000"/>
 
     <TextView
         android:id="@+id/titleText"
-        android:layout_width="70dp"
+        android:layout_width="45dp"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toStartOf="@id/colorView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/nc_no_nl_no_nr_n_nm_na_nk_ne_nr"
-        android:textAlignment="center"
+        android:gravity="center"
         android:textStyle="bold"
         android:textColor="#FFF"
-        android:padding="16dp"
-        android:textSize="23sp"
+        android:textSize="25sp"
         tools:layout_editor_absoluteY="0dp" />
 
     <View
         android:id="@+id/colorView"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#000000"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         tools:layout_editor_absoluteX="10dp"
         app:layout_constraintStart_toEndOf="@id/Title"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="16dp"/>
+        app:layout_constraintTop_toTopOf="@id/topLine"
+        app:layout_constraintBottom_toBottomOf="@id/bottomLine"
+        app:layout_constraintEnd_toEndOf="@id/startGuideLine" />
 
     <!-- Red controls -->
     <Switch
@@ -51,145 +80,147 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        tools:ignore="UseSwitchCompatOrMaterialXml"
-        tools:layout_editor_absoluteX="498dp"
-        app:layout_constraintStart_toEndOf="@id/colorView"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="50dp"
         android:switchMinWidth="50dp"
-        android:trackTint="#FF0000"/>
+        android:layout_marginStart="10dp"
+        android:trackTint="#FF0000"
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        app:layout_constraintStart_toStartOf="@id/startGuideLine"
+        app:layout_constraintTop_toTopOf="@id/topLine" />
 
     <SeekBar
         android:id="@+id/RedseekBar"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleX="1.05"
+        android:scaleY="1.05"
         android:max="100"
-        tools:layout_editor_absoluteX="556dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="55dp"
-        app:layout_constraintStart_toEndOf="@id/Redswitch"
+        android:layout_marginTop="65dp"
         android:progressBackgroundTint="#FF0000"
-        android:thumbTint="#FF0000"/>
+        android:thumbTint="#FF0000"
+        app:layout_constraintTop_toTopOf="@id/topLine"
+        app:layout_constraintStart_toEndOf="@id/startGuideLine"
+        app:layout_constraintEnd_toEndOf="@id/endGuideLine"/>
 
     <EditText
         android:id="@+id/redText"
-        android:layout_width="70dp"
+        android:layout_width="60dp"
         android:layout_height="48dp"
         android:autofillHints=""
         android:hint="@string/_0_0"
         android:inputType="numberDecimal"
         android:maxLength="4"
-        tools:layout_editor_absoluteX="744dp"
-        app:layout_constraintStart_toEndOf="@id/RedseekBar"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="55dp"
         android:textAlignment="center"
+        android:textColor="#FFFF"
         android:background="#FF0000"
-        android:textColor="#FFFF" />
+        app:layout_constraintTop_toTopOf="@id/topLine"
+        app:layout_constraintEnd_toEndOf="@id/endGuideLine"/>
 
     <!-- Green controls -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/greenLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.315"/>
+
     <Switch
         android:id="@+id/Greenswitch"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
+        android:switchMinWidth="50dp"
+        android:layout_marginStart="10dp"
+        android:trackTint="#00AA00"
         tools:ignore="UseSwitchCompatOrMaterialXml"
-        tools:layout_editor_absoluteX="429dp"
-        tools:layout_editor_absoluteY="204dp"
-        app:layout_constraintStart_toEndOf="@id/colorView"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toBottomOf="@id/Redswitch"
-        android:layout_marginTop="50dp"
-        android:switchMinWidth="40dp"
-        android:trackTint="#00AA00" />
+        app:layout_constraintStart_toEndOf="@id/startGuideLine"
+        app:layout_constraintTop_toTopOf="@id/greenLine" />
 
     <SeekBar
         android:id="@+id/GreenseekBar"
-        android:layout_width="200dp"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleX="1.05"
+        android:scaleY="1.05"
         android:max="100"
-        tools:layout_editor_absoluteY="40dp"
-        app:layout_constraintTop_toBottomOf="@id/RedseekBar"
-        android:layout_marginTop="55dp"
-        app:layout_constraintStart_toEndOf="@id/Greenswitch"
+        android:layout_marginTop="65dp"
         android:progressBackgroundTint="#00AA00"
-        android:thumbTint="#00AA00"/>
+        android:thumbTint="#00AA00"
+        app:layout_constraintTop_toTopOf="@id/greenLine"
+        app:layout_constraintStart_toStartOf="@id/startGuideLine"
+        app:layout_constraintEnd_toEndOf="@id/endGuideLine"/>
 
     <EditText
         android:id="@+id/greenText"
-        android:layout_width="70dp"
+        android:layout_width="60dp"
         android:layout_height="48dp"
         android:autofillHints=""
         android:hint="@string/_0_0"
         android:inputType="numberDecimal"
         android:maxLength="4"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="538dp"
-        app:layout_constraintStart_toEndOf="@id/GreenseekBar"
-        app:layout_constraintTop_toBottomOf="@id/redText"
-        android:layout_marginTop="55dp"
         android:textAlignment="center"
+        android:textColor="#FFFF"
         android:background="#00AA00"
-        android:textColor="#FFFF"/>
+        app:layout_constraintEnd_toEndOf="@id/endGuideLine"
+        app:layout_constraintTop_toTopOf="@id/greenLine" />
+
+    <!-- Blue Controls -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/blueLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.58"/>
 
     <Switch
         android:id="@+id/Blueswitch"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        tools:ignore="UseSwitchCompatOrMaterialXml"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="586dp"
-        app:layout_constraintTop_toBottomOf="@id/Greenswitch"
-        app:layout_constraintStart_toEndOf="@id/colorView"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="16dp"
+        android:switchMinWidth="50dp"
+        android:layout_marginStart="10dp"
         android:trackTint="#0000FF"
-        android:layout_marginBottom="40dp"/>
+        tools:ignore="UseSwitchCompatOrMaterialXml"
+        app:layout_constraintTop_toBottomOf="@id/blueLine"
+        app:layout_constraintStart_toEndOf="@id/startGuideLine" />
 
     <SeekBar
         android:id="@+id/BlueseekBar"
-        android:layout_width="200dp"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleX="1.05"
+        android:scaleY="1.05"
         android:max="100"
-        tools:layout_editor_absoluteY="613dp"
-        app:layout_constraintStart_toEndOf="@id/Blueswitch"
-        app:layout_constraintTop_toBottomOf="@id/GreenseekBar"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="65dp"
         android:progressBackgroundTint="#0000FF"
         android:thumbTint="#0000FF"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginBottom="40dp"
+        app:layout_constraintStart_toEndOf="@id/startGuideLine"
+        app:layout_constraintEnd_toEndOf="@id/endGuideLine"
+        app:layout_constraintTop_toTopOf="@id/blueLine"
+        app:layout_constraintBottom_toBottomOf="@id/bottomLine"/>
 
     <EditText
         android:id="@+id/blueText"
-        android:layout_width="70dp"
+        android:layout_width="60dp"
         android:layout_height="48dp"
         android:autofillHints=""
         android:hint="@string/_0_0"
-        android:textAlignment="center"
         android:inputType="numberDecimal"
         android:maxLength="4"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="613dp"
-        app:layout_constraintTop_toBottomOf="@id/greenText"
-        app:layout_constraintStart_toEndOf="@id/BlueseekBar"
-        android:layout_marginTop="55dp"
+        android:textAlignment="center"
         android:textColor="#FFFF"
         android:background="#0000FF"
-        android:layout_marginBottom="40dp"/>
+        app:layout_constraintTop_toTopOf="@id/blueLine"
+        app:layout_constraintEnd_toEndOf="@id/endGuideLine" />
 
     <Button
         android:id="@+id/resetButton"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Reset"
         android:backgroundTint="#a04000"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="661dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/colorView"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="10dp" />
+        app:layout_constraintBottom_toBottomOf="@id/bottomLine"
+        app:layout_constraintStart_toEndOf="@id/startGuideLine"
+        app:layout_constraintEnd_toEndOf="@id/endGuideLine" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
