@@ -23,14 +23,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.69"/>
+        app:layout_constraintGuide_percent="0.71"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/blueGuideLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.78"/>
+        app:layout_constraintGuide_percent="0.82"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/startLine"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.98" />
 
     <View
         android:layout_width="match_parent"
@@ -76,13 +76,13 @@
 
     <View
         android:id="@+id/colorView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="24dp"
         android:background="#000000"
-        android:layout_margin="16dp"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="@id/startLine"
         app:layout_constraintTop_toBottomOf="@id/colorTop"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/EndLine"
         app:layout_constraintBottom_toBottomOf="@id/redGuideLine"/>
 
         <!-- Red -->
@@ -103,11 +103,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:max="100"
-        android:thumbTint="#FF0000"
         android:scaleX="1.05"
         android:scaleY="1.05"
         android:progressBackgroundTint="#FF0000"
-        app:layout_constraintTop_toBottomOf="@id/Redswitch"
+        android:thumbTint="#FF0000"
+        android:layout_marginTop="55dp"
+        app:layout_constraintTop_toTopOf="@id/redGuideLine"
         app:layout_constraintStart_toStartOf="@id/startLine"
         app:layout_constraintEnd_toEndOf="@id/EndLine" />
 
@@ -127,7 +128,6 @@
         app:layout_constraintEnd_toEndOf="@id/EndLine" />
 
     <!-- Green -->
-
     <Switch
         android:id="@+id/Greenswitch"
         android:layout_width="48dp"
@@ -149,7 +149,8 @@
         android:progressBackgroundTint="#00AA00"
         android:scaleX="1.05"
         android:scaleY="1.05"
-        app:layout_constraintTop_toBottomOf="@id/Greenswitch"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="@id/greenGuideLine"
         app:layout_constraintStart_toStartOf="@id/startLine"
         app:layout_constraintEnd_toEndOf="@id/EndLine" />
 
@@ -190,6 +191,7 @@
         android:progressBackgroundTint="#0000FF"
         android:scaleX="1.05"
         android:scaleY="1.05"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="@id/startLine"
         app:layout_constraintTop_toBottomOf="@id/Blueswitch"
         app:layout_constraintEnd_toEndOf="@id/EndLine"/>
@@ -219,7 +221,6 @@
         android:backgroundTint="#a04000"
         android:text="@string/Reset"
         app:layout_constraintBottom_toBottomOf="@+id/bottomLine"
-        app:layout_constraintTop_toBottomOf="@id/BlueseekBar"
         app:layout_constraintEnd_toEndOf="@id/EndLine"
         app:layout_constraintStart_toStartOf="@id/startLine" />
 

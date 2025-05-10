@@ -59,12 +59,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-/*
-        val titleText = findViewById<TextView>(R.id.titleText)
-        val originalText = "COLOR MAKER"
-        val verticalText = originalText.toCharArray().joinToString("\n")
-        titleText.text = verticalText
-*/
+
         //assign each variable to their id; altered to save line space and condense amount of variables
         colorView = findViewById(R.id.colorView)
         red = ColorController(
@@ -88,10 +83,14 @@ class MainActivity : AppCompatActivity() {
         setupColorController(green)
         setupColorController(blue)
 
+        //load data to prevent constant reset
+        loadData()
+
+        //set up reset button which resets the data inputted into program
         findViewById<Button>(R.id.resetButton).setOnClickListener {
             reset()
+            //saveData()
         }
-        reset()
     }
 
     //update the color by connecting red switch with seekbar using isChecked
@@ -154,5 +153,43 @@ class MainActivity : AppCompatActivity() {
             }
             updateColor()
         }
+    }
+
+    //save data function which saves color, number, and other data
+    private fun saveData() {
+        val prefs = getSharedPreferences("color_prefs", MODE_PRIVATE)
+        val editor = prefs.edit()
+
+        listOf("red" to red, "green" to green, "blue" to blue).forEach { (name, ctrl) ->
+            editor.putBoolean("${name}_switch", ctrl.switch.isChecked)
+            editor.putFloat("${name}_value", ctrl.prevValue)
+        }
+        editor.apply()
+    }
+
+    //load data function which loads the saved data after app is reactivated
+    @SuppressLint("SetTextI18n")
+    private fun loadData() {
+        val prefs = getSharedPreferences("color_prefs", MODE_PRIVATE)
+
+        listOf("red" to red, "green" to green, "blue" to blue).forEach { (name, ctrl) ->
+            val isOn = prefs.getBoolean("${name}_switch", false)
+            val value = prefs.getFloat("${name}_value", 0.0f)
+
+            ctrl.switch.isChecked = isOn
+            ctrl.prevValue = value
+
+            ctrl.seekBar.isEnabled = isOn
+            ctrl.editText.isEnabled = isOn
+            ctrl.seekBar.progress = (value * maxColor).toInt()
+            ctrl.editText.setText("%2f".format(if(isOn) value else 0.0f))
+        }
+        updateColor()
+    }
+
+    //save when app is paused
+    override fun onPause() {
+        super.onPause()
+        saveData()
     }
 }

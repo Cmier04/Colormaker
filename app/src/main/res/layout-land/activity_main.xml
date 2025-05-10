@@ -94,7 +94,7 @@
         android:scaleX="1.05"
         android:scaleY="1.05"
         android:max="100"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="55dp"
         android:progressBackgroundTint="#FF0000"
         android:thumbTint="#FF0000"
         app:layout_constraintTop_toTopOf="@id/topLine"
@@ -121,7 +121,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.315"/>
+        app:layout_constraintGuide_percent="0.30"/>
 
     <Switch
         android:id="@+id/Greenswitch"
@@ -142,7 +142,7 @@
         android:scaleX="1.05"
         android:scaleY="1.05"
         android:max="100"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="55dp"
         android:progressBackgroundTint="#00AA00"
         android:thumbTint="#00AA00"
         app:layout_constraintTop_toTopOf="@id/greenLine"
@@ -169,7 +169,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.58"/>
+        app:layout_constraintGuide_percent="0.60"/>
 
     <Switch
         android:id="@+id/Blueswitch"
@@ -190,15 +190,12 @@
         android:scaleX="1.05"
         android:scaleY="1.05"
         android:max="100"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="55dp"
         android:progressBackgroundTint="#0000FF"
         android:thumbTint="#0000FF"
-        android:layout_marginBottom="40dp"
         app:layout_constraintStart_toEndOf="@id/startGuideLine"
         app:layout_constraintEnd_toEndOf="@id/endGuideLine"
-        app:layout_constraintTop_toTopOf="@id/blueLine"
-        app:layout_constraintBottom_toBottomOf="@id/bottomLine"/>
-
+        app:layout_constraintTop_toTopOf="@id/blueLine" />
     <EditText
         android:id="@+id/blueText"
         android:layout_width="60dp"
@@ -219,6 +216,7 @@
         android:layout_height="wrap_content"
         android:text="@string/Reset"
         android:backgroundTint="#a04000"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="@id/bottomLine"
         app:layout_constraintStart_toEndOf="@id/startGuideLine"
         app:layout_constraintEnd_toEndOf="@id/endGuideLine" />
