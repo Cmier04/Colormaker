@@ -15,6 +15,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Toast
+//delete if needed
+import android.util.Log
 
 /*---------------------N O T E S------------------------
      - add persistance = when app closes out, should save data,
@@ -25,6 +27,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var colorView: View
     private val maxColor = 100
+
+    var isProgrammaticChange = false
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private data class ColorController(
@@ -89,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         //set up reset button which resets the data inputted into program
         findViewById<Button>(R.id.resetButton).setOnClickListener {
             reset()
-            //saveData()
+            saveData()
         }
     }
 
@@ -107,6 +111,7 @@ class MainActivity : AppCompatActivity() {
     //define setupColorController function
     @SuppressLint("SetTextI18n")
     private fun setupColorController(color: ColorController) {
+        color.editText.filters = arrayOf(DecimalInputFilter())
         color.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             @SuppressLint("SetTextI18n")
             override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -117,13 +122,16 @@ class MainActivity : AppCompatActivity() {
                     updateColor()
                 }
             }
+
             override fun onStartTrackingTouch(sb: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
         //Edit Text setup
-        color.editText.addTextChangedListener(object: TextWatcher {
+        color.editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                //val string = s.toString()
+                if (isProgrammaticChange) return
                 val value = s.toString().toFloatOrNull()
                 if (value != null && value in 0.0..1.0) {
                     val progress = (value * maxColor).toInt()
@@ -134,10 +142,11 @@ class MainActivity : AppCompatActivity() {
                     showToast("Please enter a value between 0.0 and 1.0")
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
-
+        /*
         //checking if switch is active
         color.switch.setOnCheckedChangeListener { _, isChecked ->
             if (!isChecked) {
@@ -154,7 +163,21 @@ class MainActivity : AppCompatActivity() {
             updateColor()
         }
     }
+ */
 
+        color.switch.setOnCheckedChangeListener { _, isChecked ->
+            color.seekBar.isEnabled = isChecked
+            color.editText.isEnabled = isChecked
+            if (isChecked) {
+                color.editText.setText("%.2f".format(color.prevValue))
+                color.seekBar.progress = (color.prevValue * maxColor).toInt()
+            } else {
+                color.editText.setText("0.00")
+                color.seekBar.progress = 0
+            }
+            updateColor()
+        }
+    }
     //save data function which saves color, number, and other data
     private fun saveData() {
         val prefs = getSharedPreferences("color_prefs", MODE_PRIVATE)
@@ -182,7 +205,13 @@ class MainActivity : AppCompatActivity() {
             ctrl.seekBar.isEnabled = isOn
             ctrl.editText.isEnabled = isOn
             ctrl.seekBar.progress = (value * maxColor).toInt()
-            ctrl.editText.setText("%2f".format(if(isOn) value else 0.0f))
+            //change if needed
+            isProgrammaticChange = true
+            ctrl.editText.setText("%.2f".format(if(isOn) value else 0.0f))
+            //other deletable change
+            isProgrammaticChange = false
+            //delete if needed
+            Log.d("ColorMaker", "Loaded red: $value, switch: $isOn")
         }
         updateColor()
     }
