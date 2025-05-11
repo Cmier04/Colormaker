@@ -7,28 +7,21 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-//import androidx.core.view.ViewCompat
-//import androidx.core.view.WindowInsetsCompat
 import android.widget.Switch
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Toast
-//delete if needed
-import android.util.Log
-
 /*---------------------N O T E S------------------------
-     - add persistance = when app closes out, should save data,
-     - make sure it can also save data when switch is turned off
- */
 
+*/
 class MainActivity : AppCompatActivity() {
 
     private lateinit var colorView: View
     private val maxColor = 100
 
-    var isProgrammaticChange = false
+    private var isLoadingPrefs = false
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private data class ColorController(
@@ -111,14 +104,15 @@ class MainActivity : AppCompatActivity() {
     //define setupColorController function
     @SuppressLint("SetTextI18n")
     private fun setupColorController(color: ColorController) {
-        color.editText.filters = arrayOf(DecimalInputFilter())
         color.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             @SuppressLint("SetTextI18n")
             override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     val value = progress / maxColor.toFloat()
                     color.prevValue = value
+                    isLoadingPrefs = true
                     color.editText.setText("%.2f".format(value))
+                    isLoadingPrefs = false
                     updateColor()
                 }
             }
@@ -127,11 +121,10 @@ class MainActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        //Edit Text setup
+        //Text Watcher
         color.editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                //val string = s.toString()
-                if (isProgrammaticChange) return
+                if (isLoadingPrefs) return
                 val value = s.toString().toFloatOrNull()
                 if (value != null && value in 0.0..1.0) {
                     val progress = (value * maxColor).toInt()
@@ -146,35 +139,20 @@ class MainActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
-        /*
-        //checking if switch is active
-        color.switch.setOnCheckedChangeListener { _, isChecked ->
-            if (!isChecked) {
-                color.seekBar.isEnabled = false
-                color.editText.isEnabled = false
-                color.editText.setText("0.0")
-                color.seekBar.progress = 0
-            } else {
-                color.seekBar.isEnabled = true
-                color.editText.isEnabled = true
-                color.editText.setText("%.2f".format(color.prevValue))
-                color.seekBar.progress = (color.prevValue * maxColor).toInt()
-            }
-            updateColor()
-        }
-    }
- */
 
+        //Switch Listener
         color.switch.setOnCheckedChangeListener { _, isChecked ->
             color.seekBar.isEnabled = isChecked
             color.editText.isEnabled = isChecked
+            isLoadingPrefs = true
             if (isChecked) {
                 color.editText.setText("%.2f".format(color.prevValue))
                 color.seekBar.progress = (color.prevValue * maxColor).toInt()
             } else {
-                color.editText.setText("0.00")
+                color.editText.setText("0.0")
                 color.seekBar.progress = 0
             }
+            isLoadingPrefs = false
             updateColor()
         }
     }
@@ -194,6 +172,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun loadData() {
         val prefs = getSharedPreferences("color_prefs", MODE_PRIVATE)
+        isLoadingPrefs = true
 
         listOf("red" to red, "green" to green, "blue" to blue).forEach { (name, ctrl) ->
             val isOn = prefs.getBoolean("${name}_switch", false)
@@ -205,14 +184,11 @@ class MainActivity : AppCompatActivity() {
             ctrl.seekBar.isEnabled = isOn
             ctrl.editText.isEnabled = isOn
             ctrl.seekBar.progress = (value * maxColor).toInt()
-            //change if needed
-            isProgrammaticChange = true
+
             ctrl.editText.setText("%.2f".format(if(isOn) value else 0.0f))
-            //other deletable change
-            isProgrammaticChange = false
-            //delete if needed
-            Log.d("ColorMaker", "Loaded red: $value, switch: $isOn")
         }
+        isLoadingPrefs = false
+
         updateColor()
     }
 
