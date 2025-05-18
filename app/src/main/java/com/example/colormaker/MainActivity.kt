@@ -14,7 +14,7 @@ import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Toast
 /*---------------------N O T E S------------------------
-
+   - implement persistence properly using OnPause(), OnCreate() OnResume()
 */
 class MainActivity : AppCompatActivity() {
 
@@ -156,6 +156,7 @@ class MainActivity : AppCompatActivity() {
             updateColor()
         }
     }
+    
     //save data function which saves color, number, and other data
     private fun saveData() {
         val prefs = getSharedPreferences("color_prefs", MODE_PRIVATE)
