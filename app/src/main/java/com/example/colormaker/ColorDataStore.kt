@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 val Context.dataStore by preferencesDataStore(name = "color_prefs")
 
 object  ColorDataStore {
-   private val RED = floatPreferencesKey("red")
+    private val RED = floatPreferencesKey("red")
     private val GREEN = floatPreferencesKey("green")
     private val BLUE = floatPreferencesKey("blue")
 
@@ -18,15 +18,15 @@ object  ColorDataStore {
     private val GREEN_ON = booleanPreferencesKey("green_on")
     private val BLUE_ON = booleanPreferencesKey("blue_on")
 
-    suspend fun save(context: Context, vm:ColorViewModel) {
+    suspend fun save(context: Context, data: ColorData) {
         context.dataStore.edit { prefs ->
-            prefs[RED] = vm.red.value
-            prefs[GREEN] = vm.green.value
-            prefs[BLUE] = vm.blue.value
+            prefs[RED] = data.red
+            prefs[GREEN] = data.green
+            prefs[BLUE] = data.blue
 
-            prefs[RED_ON] = vm.redOn.value
-            prefs[GREEN_ON] = vm.greenOn.value
-            prefs[BLUE_ON] = vm.blueOn.value
+            prefs[RED_ON] = data.redOn
+            prefs[GREEN_ON] = data.greenOn
+            prefs[BLUE_ON] = data.blueOn
         }
     }
 

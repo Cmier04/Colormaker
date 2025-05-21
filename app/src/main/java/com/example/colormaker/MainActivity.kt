@@ -13,6 +13,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.Flow
 
 import androidx.datastore.preferences.core.*
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         lifecycleScope.launch {
-            viewModel.observeState().collectLatest { state ->
+            viewModel.colorState.collectLatest { state ->
                 val r = state.red
                 val g = state.green
                 val b = state.blue
@@ -118,6 +119,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
         findViewById<Button>(R.id.resetButton).setOnClickListener { resetAll() }
+
+        //added later
+        lifecycleScope.launch {
+            ColorDataStore.load(applicationContext).collect { data ->
+                viewModel.apply(data)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.colorState
+                .debounce(500)
+                .collectLatest { state ->
+                    ColorDataStore.save(applicationContext, viewModel.toColorData())
+                }
+        }
     }
 
     //set up Toast for error messages
@@ -133,66 +149,10 @@ class MainActivity : AppCompatActivity() {
         colorView.setBackgroundColor(Color.rgb(redVal, greenVal, blueVal))
     }
 
-    //define setupColorController function
-    /*@SuppressLint("SetTextI18n")
-    private fun setupColorController(color: ColorController) {
-        color.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            @SuppressLint("SetTextI18n")
-            override fun onProgressChanged(sb: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    val value = progress / maxColor.toFloat()
-                    color.prevValue = value
-                    isLoadingPrefs = true
-                    color.editText.setText("%.2f".format(value))
-                    isLoadingPrefs = false
-                    updateColor()
-                }
-            }
-
-            override fun onStartTrackingTouch(sb: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
-
-        //Text Watcher
-        color.editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (isLoadingPrefs) return
-                val value = s.toString().toFloatOrNull()
-                if (value != null && value in 0.0..1.0) {
-                    val progress = (value * maxColor).toInt()
-                    color.seekBar.progress = progress
-                    color.prevValue = value
-                    updateColor()
-                } else {
-                    showToast("Please enter a value between 0.0 and 1.0")
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-
-        //Switch Listener
-        color.switch.setOnCheckedChangeListener { _, isChecked ->
-            color.seekBar.isEnabled = isChecked
-            color.editText.isEnabled = isChecked
-            isLoadingPrefs = true
-            if (isChecked) {
-                color.editText.setText("%.2f".format(color.prevValue))
-                color.seekBar.progress = (color.prevValue * maxColor).toInt()
-            } else {
-                color.editText.setText("0.0")
-                color.seekBar.progress = 0
-            }
-            isLoadingPrefs = false
-            updateColor()
-        }
-    }*/
-
     private fun setupColorController(ctrl: ColorController) {
         ctrl.seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
+                if (fromUser && ctrl.switch.isChecked) {
                     val value = progress / maxColor.toFloat()
                     ctrl.prevValue = value
                     isLoadingPrefs = true
@@ -213,7 +173,7 @@ class MainActivity : AppCompatActivity() {
 
         ctrl.editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (isLoadingPrefs) return
+                if (isLoadingPrefs || !ctrl.switch.isChecked) return
                 val value = s.toString().toFloatOrNull()
                 if (value != null && value in 0.0..1.0) {
                     val progress = (value * maxColor).toInt()
@@ -233,19 +193,25 @@ class MainActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
+
+        //change values to 0.00 when switch is off and enable when switch is on
         ctrl.switch.setOnCheckedChangeListener { _, isChecked ->
+            //disable/enable the seekBar and EditText
             ctrl.seekBar.isEnabled = isChecked
             ctrl.editText.isEnabled = isChecked
+
             isLoadingPrefs = true
             if (isChecked) {
                 ctrl.editText.setText("%.2f".format(ctrl.prevValue))
                 ctrl.seekBar.progress = (ctrl.prevValue * maxColor).toInt()
             } else {
-                ctrl.editText.setText("0.0")
+                //when switch is Off, reset values to 0
+                ctrl.editText.setText("0.00")
                 ctrl.seekBar.progress = 0
             }
             isLoadingPrefs = false
 
+            //update viewModel
             when (ctrl) {
                 red -> viewModel.setRedOn(isChecked)
                 green -> viewModel.setGreenOn(isChecked)
@@ -258,22 +224,33 @@ class MainActivity : AppCompatActivity() {
         redVal: Float, greenVal: Float, blueVal: Float,
         redOn: Boolean, greenOn: Boolean, blueOn: Boolean
     ) {
+        isLoadingPrefs = true
+
+        //set switch states
         red.switch.isChecked = redOn
         green.switch.isChecked = greenOn
         blue.switch.isChecked = blueOn
 
+        //restore persisted values on destroy
         red.prevValue = redVal
         green.prevValue = greenVal
         blue.prevValue = blueVal
 
-        red.seekBar.progress = (redVal * maxColor).toInt()
-        green.seekBar.progress = (greenVal * maxColor).toInt()
-        blue.seekBar.progress = (blueVal * maxColor).toInt()
+        val redDisplay = if (redOn) red.prevValue else 0f
+        val greenDisplay = if (greenOn) green.prevValue else 0f
+        val blueDisplay = if (blueOn) blue.prevValue else 0f
 
-        red.editText.setText("%.2f".format(redVal))
-        green.editText.setText("%.2f".format(greenVal))
-        blue.editText.setText("%.2f".format(blueVal))
+        //seekBar and shows prevValue if switch is on
+        red.seekBar.progress = (redDisplay * maxColor).toInt()
+        green.seekBar.progress = (greenDisplay * maxColor).toInt()
+        blue.seekBar.progress = (blueDisplay * maxColor).toInt()
 
+        //update editText if user is Not typing in it
+        if (!red.editText.hasFocus()) red.editText.setText("%.2f".format(redDisplay))
+        if (!green.editText.hasFocus()) green.editText.setText("%.2f".format(greenDisplay))
+        if (!blue.editText.hasFocus()) blue.editText.setText("%.2f".format(blueDisplay))
+
+        //enables and disables controls
         red.seekBar.isEnabled = redOn
         green.seekBar.isEnabled = greenOn
         blue.seekBar.isEnabled = blueOn
@@ -282,11 +259,9 @@ class MainActivity : AppCompatActivity() {
         green.editText.isEnabled = greenOn
         blue.editText.isEnabled = blueOn
 
-        updateColor(
-            if (redOn) redVal else 0f,
-            if (greenOn) greenVal else 0f,
-            if (blueOn) blueVal else 0f,
-        )
+        //update colorView
+        updateColor(redDisplay, greenDisplay, blueDisplay)
+        isLoadingPrefs = false
     }
 
     private fun resetAll() {
@@ -298,39 +273,15 @@ class MainActivity : AppCompatActivity() {
         viewModel.setBlueOn(false)
         showToast("Reset to default.")
         lifecycleScope.launch {
-            ColorDataStore.save(applicationContext, viewModel)
+            ColorDataStore.save(applicationContext, viewModel.toColorData())
         }
     }
-/*
-    //load data function which loads the saved data after app is reactivated
-    @SuppressLint("SetTextI18n")
-    private fun loadData() {
-        val prefs = getSharedPreferences("color_prefs", MODE_PRIVATE)
-        isLoadingPrefs = true
-
-        listOf("red" to red, "green" to green, "blue" to blue).forEach { (name, ctrl) ->
-            val isOn = prefs.getBoolean("${name}_switch", false)
-            val value = prefs.getFloat("${name}_value", 0.0f)
-
-            ctrl.switch.isChecked = isOn
-            ctrl.prevValue = value
-
-            ctrl.seekBar.isEnabled = isOn
-            ctrl.editText.isEnabled = isOn
-            ctrl.seekBar.progress = (value * maxColor).toInt()
-
-            ctrl.editText.setText("%.2f".format(if(isOn) value else 0.0f))
-        }
-        isLoadingPrefs = false
-
-        updateColor()
-    }*/
 
     //save when app is paused
     override fun onPause() {
         super.onPause()
         lifecycleScope.launch {
-            ColorDataStore.save(applicationContext, viewModel)
+            ColorDataStore.save(applicationContext, viewModel.toColorData())
         }
     }
 }
