@@ -1,11 +1,7 @@
 package com.example.colormaker
 
-import android.app.Application
-import androidx.datastore.preferences.core.*
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.combine
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.stateIn

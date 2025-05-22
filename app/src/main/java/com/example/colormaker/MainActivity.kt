@@ -8,16 +8,12 @@ import android.text.TextWatcher
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
-import android.widget.*
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.Flow
 
-import androidx.datastore.preferences.core.*
-import androidx.datastore.preferences.preferencesDataStore
 
 import android.widget.Switch
 import android.view.View
@@ -25,9 +21,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Toast
-/*---------------------N O T E S------------------------
-   - implement persistence properly using OnPause(), OnCreate() OnResume()
-*/
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var colorView: View
